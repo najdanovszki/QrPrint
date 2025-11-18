@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">QrPrint</string>
+
+    <string name="ugyfelRovidNev"><b><big>Ügyfél rövid név</big></b></string>
+    <string name="szallitRovidNev"><b><big>Szállít rövid név</big></b></string>
+    <string name="szikszam"><b><big>Sziktszám</big></b></string>
+    <string name="szamlaszam"><b><big>Számlaszám</big></b></string>
+    <string name="kelte"><b><big>Kelte</big></b></string>
+    <string name="netto"><b><big>Nettó</big></b></string>
+    <string name="suly"><b><big>Súly</big></b></string>
+    <string name="cikkszam"><b><big>Cikkszám</big></b></string>
+    <string name="keszletkod"><b><big>Készletkód</big></b></string>
+    <string name="mennyiseg"><b><big>Mennyiség</big></b></string>
+    <string name="leiras"><b><big>Leírás</big></b></string>
+    <string name="statusz"><b><big>Státusz</big></b></string>
+    <string name="cikk"><b><big>Cikk</big></b></string>
+    <string name="kkod"><b><big>KKÓD</big></b></string>
+    <string name="rendelSzam"><b><big>Rendel. szám</big></b></string>
+    <string name="hi"><b><big>Hi</big></b></string>
+    <string name="tartozas"><b><big>Tartozás</big></b></string>
+    <string name="kiadhato"><b><big>Kiadható</big></b></string>
+    <string name="keszlet"><b><big>Készlet</big></b></string>
+    <string name="szallMod"><b><big>Száll. mód</big></b></string>
+    <string name="hivatkozas"><b><big>Hivatkozás</big></b></string>
+    <string name="status"><b><big>STATUS</big></b></string>
+    <string name="tetelssz"><b><big>TÉTELSSZ</big></b></string>
+    <string name="ugyfelkod"><b><big>Ügyfélkód</big></b></string>
+    <string name="kkodEleje"><b><big>KKOD_eleje</big></b></string>
+    <string name="ssz"><b><big>Ssz</big></b></string>
+    <string name="db"><b><big>Db</big></b></string>
+    <string name="me"><b><big>Me</big></b></string>
+    <string name="megjegyzes"><b><big>Megjegyzés</big></b></string>
+    <string name="kiadhat"><b><big>Kiadhat</big></b></string>
+    <string name="rk"><b><big>Rk</big></b></string>
+    <string name="hiSn"><b><big>Hi/SN</big></b></string>
+    <string name="kkodMegoszlas"><b><big>KKOD megoszlás</big></b></string>
+    <string name="rendelesDatuma"><b><big>Rendelés dátuma</big></b></string>
+    <string name="nettoErtek"><b><big>Nettó érték</big></b></string>
+    <string name="bruttoSuly"><b><big>Bruttó súly</big></b></string>
+    <string name="szallitasiCimNeve"><b><big>Szállítási cím neve</big></b></string>
+    <string name="hatarido"><b><big>Határidő</big></b></string>
+    <string name="teljKkodMas"><b><big>KAKKK%</big></b></string>
+    <string name="teljKkodAzonos"><b><big>KAKKA%</big></b></string>
+    <string name="riktszam"><b><big>Riktszám</big></b></string>
+    <string name="kbiktszam"><b><big>KBIKTSZÁM</big></b></string>
+    <string name="ugyfnev"><b><big>Ugyfnev</big></b></string>
+    <string name="szlevszam"><b><big>Szlev szám</big></b></string>
+    <string name="gyariszam"><b><big>Gyáriszám</big></b></string>
+    <string name="eszamla"><b><big>E-számla</big></b></string>
+    <string name="misc"><b><big>   </big></b></string>
+
+    <string name="tSzamla">Számla: %1$s</string>
+    <string name="tSzallVevo">Száll: %1$s Vevő: %2$s</string>
+    <string name="tSzallCim">Száll cím: %1$s %2$s %3$s %4$s</string>
+    <string name="tZeta">ZETA-s ügyintéző: %1$s</string>
+    <string name="tSzallFizBrNtDn">Száll: %1$s Fiz: %2$s Br: %3$s Nt: %4$s Dn: %5$s</string>
+    <string name="tMegjegyzes">Megjegyzés: %1$s</string>
+    <string name="tRendelSzam">Rendelési szám: %1$s</string>
+    <string name="tStatus">Status: %1$s</string>
+    <string name="tKbizszam">Kbizszam: %1$s</string>
+
+</resources>

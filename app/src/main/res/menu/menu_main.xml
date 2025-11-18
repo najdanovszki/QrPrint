@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/camera"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/front"
+            android:title="Előlapi kamera" />
+        <item
+            android:id="@+id/back"
+            android:title="Hátlapi kamera" />
+    </group>
+</menu>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/ugyfelRovidNev"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/ugyfelRovidNev" />
+
+    <TextView
+        android:id="@+id/szallitRovidNev"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/szallitRovidNev" />
+
+    <TextView
+        android:id="@+id/szlevszam"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/szlevszam" />
+
+    <TextView
+        android:id="@+id/kelte"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/kelte" />
+
+    <TextView
+        android:id="@+id/nettoErtek"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/nettoErtek" />
+
+    <TextView
+        android:id="@+id/bruttoSuly"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/bruttoSuly" />
+</TableRow>

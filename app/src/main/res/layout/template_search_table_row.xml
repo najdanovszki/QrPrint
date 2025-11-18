@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/cikkszam"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cikkszam" />
+
+    <TextView
+        android:id="@+id/keszletkod"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/keszletkod" />
+
+    <TextView
+        android:id="@+id/leiras"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/leiras" />
+
+    <TextView
+        android:id="@+id/mennyiseg"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mennyiseg" />
+</TableRow>
