@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.menu.MenuFragment">
+
+        <Button
+            android:id="@+id/tasksBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Feladatok"
+            app:layout_constraintBottom_toTopOf="@id/billsBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/billsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Utolsó 4 nap számlái"
+            app:layout_constraintBottom_toTopOf="@id/liveOrdersBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tasksBtn" />
+
+        <Button
+            android:id="@+id/liveOrdersBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Élő rendelések"
+            app:layout_constraintBottom_toTopOf="@id/deliveryNotesBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/billsBtn" />
+
+        <Button
+            android:id="@+id/deliveryNotesBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Szállítólevelek"
+            app:layout_constraintBottom_toTopOf="@id/revenuesBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/liveOrdersBtn" />
+
+        <Button
+            android:id="@+id/revenuesBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bevételezések"
+            app:layout_constraintBottom_toTopOf="@id/searchBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/deliveryNotesBtn" />
+
+        <Button
+            android:id="@+id/searchBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cikk keresés"
+            app:layout_constraintBottom_toTopOf="@id/qrBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/revenuesBtn" />
+
+        <Button
+            android:id="@+id/qrBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QR code"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

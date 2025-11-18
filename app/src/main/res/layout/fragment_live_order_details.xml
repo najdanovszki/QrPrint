@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".ui.bills.BillDetailsFragment">
+
+        <Button
+            android:id="@+id/backToMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vissza a menübe" />
+
+        <TextView
+            android:id="@+id/rendelSzam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tRendelSzam" />
+
+        <TextView
+            android:id="@+id/szallVevo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tSzallVevo" />
+
+        <TextView
+            android:id="@+id/szallCim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tSzallCim" />
+
+        <TextView
+            android:id="@+id/zeta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tZeta" />
+
+        <TextView
+            android:id="@+id/szallFizBrNtDn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tSzallFizBrNtDn" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tStatus" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:id="@+id/liveOrderDetailsTable"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <include layout="@layout/template_live_order_details_table_row" />
+
+            </TableLayout>
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/statusRadioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/ujRendeles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Uj rendelés" />
+
+                <RadioButton
+                    android:id="@+id/elokeszitheto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Előkészíthető" />
+
+                <RadioButton
+                    android:id="@+id/osszeszedesAlatt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Összeszedés alatt" />
+
+                <RadioButton
+                    android:id="@+id/osszeszedve"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Összeszedve" />
+            </RadioGroup>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp">
+
+                <TableLayout
+                    android:id="@+id/subDetailsTable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <include layout="@layout/template_sub_details_table_row" />
+
+                </TableLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/statusRogzitButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rögzít" />
+    </LinearLayout>
+</ScrollView>

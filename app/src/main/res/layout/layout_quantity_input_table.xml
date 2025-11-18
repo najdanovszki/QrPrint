@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_vertical"
+            android:text="Z"
+            android:textAlignment="center"
+            android:textColor="@color/app_red"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_vertical"
+            android:text="D"
+            android:textAlignment="center"
+            android:textColor="@color/app_red"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_vertical"
+            android:text="R"
+            android:textAlignment="center"
+            android:textColor="@color/app_red"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center_vertical"
+            android:text="P"
+            android:textAlignment="center"
+            android:textColor="@color/app_red"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView112"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="KICSI"
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnMinusSZ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editSZ"
+                style="@style/Widget.AppCompat.EditText.CustomEditText"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="SZ"
+                android:inputType="number" />
+
+            <ImageButton
+                android:id="@+id/btnPlusSZ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_plus" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnMinusSD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editSD"
+                style="@style/Widget.AppCompat.EditText.CustomEditText"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="SD"
+                android:inputType="number" />
+
+            <ImageButton
+                android:id="@+id/btnPlusSD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_plus" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnMinusSR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editSR"
+                style="@style/Widget.AppCompat.EditText.CustomEditText"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="SR"
+                android:inputType="number" />
+
+            <ImageButton
+                android:id="@+id/btnPlusSR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_plus" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnMinusSP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editSP"
+                style="@style/Widget.AppCompat.EditText.CustomEditText"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="SP"
+                android:inputType="number" />
+
+            <ImageButton
+                android:id="@+id/btnPlusSP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_plus" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView113"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="KOZEPES"
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnMinusMZ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editMZ"
+                style="@style/Widget.AppCompat.EditText.CustomEditText"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="MZ"
+                android:inputType="number" />
+
+            <ImageButton
+                android:id="@+id/btnPlusMZ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_plus" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnMinusMD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editMD"
+                style="@style/Widget.AppCompat.EditText.CustomEditText"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="MD"
+                android:inputType="number" />
+
+            <ImageButton
+                android:id="@+id/btnPlusMD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_plus" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnMinusMR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editMR"
+                style="@style/Widget.AppCompat.EditText.CustomEditText"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="MR"
+                android:inputType="number" />
+
+            <ImageButton
+                android:id="@+id/btnPlusMR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_plus" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnMinusMP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editMP"
+                style="@style/Widget.AppCompat.EditText.CustomEditText"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="MP"
+                android:inputType="number" />
+
+            <ImageButton
+                android:id="@+id/btnPlusMP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_plus" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView114"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="NAGY"
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnMinusLZ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editLZ"
+                style="@style/Widget.AppCompat.EditText.CustomEditText"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="LZ"
+                android:inputType="number" />
+
+            <ImageButton
+                android:id="@+id/btnPlusLZ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_plus" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnMinusLD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editLD"
+                style="@style/Widget.AppCompat.EditText.CustomEditText"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="LD"
+                android:inputType="number" />
+
+            <ImageButton
+                android:id="@+id/btnPlusLD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_plus" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnMinusLR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editLR"
+                style="@style/Widget.AppCompat.EditText.CustomEditText"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="LR"
+                android:inputType="number" />
+
+            <ImageButton
+                android:id="@+id/btnPlusLR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_plus" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnMinusLP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_minus" />
+
+            <EditText
+                android:id="@+id/editLP"
+                style="@style/Widget.AppCompat.EditText.CustomEditText"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_edit_text"
+                android:ems="10"
+                android:hint="LP"
+                android:inputType="number" />
+
+            <ImageButton
+                android:id="@+id/btnPlusLP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_red_circle"
+                app:srcCompat="@drawable/ic_plus" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="35dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
+            android:paddingBottom="0dp"
+            android:text="M\nE\nN\nT"
+            android:textAlignment="center"
+            app:iconPadding="0dp" />
+    </LinearLayout>
+</LinearLayout>

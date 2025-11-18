@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TableRow">
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:background">@drawable/table_element_border</item>
+    </style>
+
+    <style name="Widget.AppCompat.EditText.CustomEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="background">@drawable/bg_edit_text</item>
+        <item name="android:textAlignment">center</item>
+
+    </style>
+</resources>
