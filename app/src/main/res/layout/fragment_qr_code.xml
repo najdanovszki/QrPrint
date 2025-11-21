@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.qrcode.QrCodeFragment">
+
+    <AutoCompleteTextView
+        android:id="@+id/partnumberText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:hint="Part number search"
+        android:imeOptions="flagNoExtractUi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/totalQuantityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:hint="Total Quantity"
+        android:imeOptions="flagNoExtractUi"
+        android:inputType="number"
+        app:layout_constraintBaseline_toBaselineOf="@id/partnumberText"
+        app:layout_constraintStart_toEndOf="@id/partnumberText" />
+
+    <EditText
+        android:id="@+id/kkodText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:hint="KKOD"
+        android:imeOptions="flagNoExtractUi"
+        app:layout_constraintBaseline_toBaselineOf="@id/partnumberText"
+        app:layout_constraintStart_toEndOf="@id/totalQuantityText" />
+
+    <EditText
+        android:id="@+id/documentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:hint="Document no"
+        android:imeOptions="flagNoExtractUi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/partnumberText" />
+
+    <EditText
+        android:id="@+id/lotText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:hint="Lot no"
+        android:imeOptions="flagNoExtractUi"
+        app:layout_constraintBaseline_toBaselineOf="@id/documentText"
+        app:layout_constraintStart_toEndOf="@id/documentText" />
+
+    <EditText
+        android:id="@+id/multipleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:hint="Multiple"
+        android:imeOptions="flagNoExtractUi"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/documentText" />
+
+    <EditText
+        android:id="@+id/quantityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:hint="Quantity"
+        android:imeOptions="flagNoExtractUi"
+        android:inputType="number"
+        app:layout_constraintBaseline_toBaselineOf="@id/multipleText"
+        app:layout_constraintStart_toEndOf="@id/multipleText" />
+
+    <Button
+        android:id="@+id/resetBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:text="Reset"
+        app:layout_constraintBaseline_toBaselineOf="@id/multipleText"
+        app:layout_constraintStart_toEndOf="@id/quantityText" />
+
+    <Button
+        android:id="@+id/packoutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:text="Packout"
+        app:layout_constraintBaseline_toBaselineOf="@id/multipleText"
+        app:layout_constraintStart_toEndOf="@id/resetBtn" />
+
+    <Button
+        android:id="@+id/generateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:text="Generate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/multipleText" />
+
+    <Button
+        android:id="@+id/readBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:text="Read"
+        app:layout_constraintBaseline_toBaselineOf="@id/generateBtn"
+        app:layout_constraintStart_toEndOf="@id/generateBtn" />
+
+    <Button
+        android:id="@+id/settingsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:text="Settings"
+        app:layout_constraintBaseline_toBaselineOf="@id/generateBtn"
+        app:layout_constraintStart_toEndOf="@id/readBtn" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/settingsBtn"
+        app:layout_constraintStart_toEndOf="@id/settingsBtn"
+        app:layout_constraintTop_toTopOf="@id/settingsBtn" />
+
+    <Button
+        android:id="@+id/backToMenuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:text="Vissza a menübe"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/generateBtn" />
+</androidx.constraintlayout.widget.ConstraintLayout>

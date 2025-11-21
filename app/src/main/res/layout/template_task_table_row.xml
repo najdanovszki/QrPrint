@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/statusz"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/statusz" />
+
+    <TextView
+        android:id="@+id/ugyfelRovidNev"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ugyfelRovidNev" />
+
+    <TextView
+        android:id="@+id/szallRovidNev"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/szallitRovidNev" />
+
+    <TextView
+        android:id="@+id/cikk"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cikk" />
+
+    <TextView
+        android:id="@+id/kkod"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/kkod" />
+
+    <TextView
+        android:id="@+id/rendelSzam"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rendelSzam" />
+
+    <TextView
+        android:id="@+id/hi"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hi" />
+
+    <TextView
+        android:id="@+id/tartozas"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tartozas" />
+
+    <TextView
+        android:id="@+id/kiadhato"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/kiadhato" />
+
+    <TextView
+        android:id="@+id/keszlet"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/keszlet" />
+
+    <TextView
+        android:id="@+id/szallMod"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/szallMod" />
+
+    <TextView
+        android:id="@+id/hivatkozas"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hivatkozas" />
+
+</TableRow>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.webtic.qrprint.ui.menu.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu"
+        app:startDestination="@id/action_menuFragment_to_qrCodeFragment">
+        <action
+            android:id="@+id/action_menuFragment_to_tasksFragment"
+            app:destination="@id/tasksFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_billsFragment"
+            app:destination="@id/billsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_liveOrdersFragment"
+            app:destination="@id/liveOrdersFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_deliveryNotesFragment"
+            app:destination="@id/deliveryNotesFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_revenuesFragment"
+            app:destination="@id/revenuesFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_qrCodeFragment"
+            app:destination="@id/qrCodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tasksFragment"
+        android:name="com.webtic.qrprint.ui.tasks.TasksFragment"
+        android:label="fragment_tasks"
+        tools:layout="@layout/fragment_tasks">
+        <action
+            android:id="@+id/action_tasksFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_tasksFragment_to_qrCodeFragment"
+            app:destination="@id/qrCodeFragment" />
+        <action
+            android:id="@+id/action_tasksFragment_to_liveOrderDetailsFragment"
+            app:destination="@id/liveOrderDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/billsFragment"
+        android:name="com.webtic.qrprint.ui.bills.BillsFragment"
+        android:label="fragment_bills"
+        tools:layout="@layout/fragment_bills">
+        <action
+            android:id="@+id/action_billsFragment_to_billDetails"
+            app:destination="@id/billDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/liveOrdersFragment"
+        android:name="com.webtic.qrprint.ui.liveorders.LiveOrdersFragment"
+        android:label="fragment_live_orders"
+        tools:layout="@layout/fragment_live_orders">
+        <action
+            android:id="@+id/action_liveOrdersFragment_to_liveOrderDetailsFragment"
+            app:destination="@id/liveOrderDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/deliveryNotesFragment"
+        android:name="com.webtic.qrprint.ui.deliverynotes.DeliveryNotesFragment"
+        android:label="fragment_delivery_notes"
+        tools:layout="@layout/fragment_delivery_notes">
+        <action
+            android:id="@+id/action_deliveryNotesFragment_to_deliveryNoteDetailsFragment"
+            app:destination="@id/deliveryNoteDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/revenuesFragment"
+        android:name="com.webtic.qrprint.ui.revenues.RevenuesFragment"
+        android:label="fragment_revenues"
+        tools:layout="@layout/fragment_revenues" >
+        <action
+            android:id="@+id/action_revenuesFragment_to_revenueDetailsFragment"
+            app:destination="@id/revenueDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.webtic.qrprint.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_qrCodeFragment"
+            app:destination="@id/qrCodeFragment" />
+        <argument
+            android:name="searchParam"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/qrCodeFragment"
+        android:name="com.webtic.qrprint.ui.qrcode.QrCodeFragment"
+        android:label="fragment_qr_code"
+        tools:layout="@layout/fragment_qr_code">
+        <argument
+            android:name="selection"
+            app:argType="com.webtic.qrprint.ui.qrcode.NavigationItem"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/billDetails"
+        android:name="com.webtic.qrprint.ui.bills.BillDetailsFragment"
+        android:label="fragment_bill_details"
+        tools:layout="@layout/fragment_bill_details">
+        <argument
+            android:name="sziktszam"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_billDetails_to_qrCodeFragment"
+            app:destination="@id/qrCodeFragment" />
+        <action
+            android:id="@+id/action_billDetails_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/liveOrderDetailsFragment"
+        android:name="com.webtic.qrprint.ui.liveorders.LiveOrderDetailsFragment"
+        android:label="fragment_live_order_details"
+        tools:layout="@layout/fragment_live_order_details">
+        <argument
+            android:name="riktszam"
+            app:argType="string" />
+        <argument
+        android:name="ugyfelkod"
+        app:argType="string" />
+        <action
+            android:id="@+id/action_liveOrderDetailsFragment_to_qrCodeFragment"
+            app:destination="@id/qrCodeFragment" />
+        <action
+            android:id="@+id/action_liveOrderDetailsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/deliveryNoteDetailsFragment"
+        android:name="com.webtic.qrprint.ui.deliverynotes.DeliveryNoteDetailsFragment"
+        android:label="DeliveryNoteDetailsFragment"
+        tools:layout="@layout/fragment_delivery_note_details">
+        <argument
+            android:name="kbiktszam"
+            app:argType="string" />
+        <argument
+            android:name="ugyfelkod"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_deliveryNoteDetailsFragment_to_qrCodeFragment"
+            app:destination="@id/qrCodeFragment" />
+        <action
+            android:id="@+id/action_deliveryNoteDetailsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/revenueDetailsFragment"
+        android:name="com.webtic.qrprint.ui.revenues.RevenueDetailsFragment"
+        android:label="fragment_revenue_details"
+        tools:layout="@layout/fragment_revenue_details">
+        <argument
+            android:name="kbiktszam"
+            app:argType="string" />
+        <argument
+            android:name="ugyfelkod"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_revenueDetailsFragment_to_qrCodeFragment"
+            app:destination="@id/qrCodeFragment" />
+        <action
+            android:id="@+id/action_revenueDetailsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.webtic.qrprint.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_menuFragment"
+            app:destination="@id/menuFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+</navigation>

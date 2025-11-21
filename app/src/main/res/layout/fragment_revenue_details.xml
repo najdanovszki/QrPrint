@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/backToMenuButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vissza a menübe" />
+
+                <TextView
+                    android:id="@+id/kbizszam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tKbizszam" />
+
+                <TextView
+                    android:id="@+id/szallVevo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tSzallVevo" />
+
+                <TextView
+                    android:id="@+id/szallCim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tSzallCim" />
+
+                <TextView
+                    android:id="@+id/zeta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tZeta" />
+
+                <TextView
+                    android:id="@+id/szallFizBrNtDn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tSzallFizBrNtDn" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.webtic.qrprint.ui.components.QuantityInputForm
+                    android:id="@+id/quantityInputForm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:id="@+id/revenueDetailsTable"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <include layout="@layout/template_revenue_details_table_row" />
+
+            </TableLayout>
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TableLayout
+                android:id="@+id/subDetailsTable"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <include layout="@layout/template_sub_details_table_row" />
+
+            </TableLayout>
+        </HorizontalScrollView>
+
+    </LinearLayout>
+</ScrollView>

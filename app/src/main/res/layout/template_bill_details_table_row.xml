@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/ssz"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ssz" />
+
+    <TextView
+        android:id="@+id/cikk"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cikk" />
+
+    <TextView
+        android:id="@+id/kkod"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/kkod" />
+
+    <TextView
+        android:id="@+id/db"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/db" />
+
+    <TextView
+        android:id="@+id/me"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/me" />
+
+    <TextView
+        android:id="@+id/kiadhat"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/kiadhat" />
+
+    <TextView
+        android:id="@+id/rk"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rk" />
+
+    <TextView
+        android:id="@+id/hiSn"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hiSn" />
+
+    <TextView
+        android:id="@+id/kkodMegoszlas"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/kkodMegoszlas" />
+
+    <TextView
+        android:id="@+id/megjegyzes"
+        style="@style/TableRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/megjegyzes" />
+</TableRow>
