@@ -62,13 +62,13 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     // QR Code Management
-    implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
+    implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
     implementation 'com.google.zxing:core:3.3.0'
 
     // Permission handling
     def permission_dispatcher_version = "4.8.0"
-    implementation "org.permissionsdispatcher:permissionsdispatcher:$permission_dispatcher_version"
-    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:$permission_dispatcher_version"
+    implementation "com.github.permissions-dispatcher:permissionsdispatcher:$permission_dispatcher_version"
+    kapt "com.github.permissions-dispatcher:permissionsdispatcher-processor:$permission_dispatcher_version"
 
     // Brother Printer Library
     implementation project(":BrotherPrintLibrary")
