@@ -104,7 +104,7 @@ PermissionDispatcher annotációk:
 
 ## Adatbázis integráció
 - Kapcsolati konstansok: `AppConstants.kt` (DB_SERVER, DB_NAME, stb.).
-- jTDS driver lokálisan (`libs/jtds-1.2.7.jar`).
+- jTDS driver lokálisan (`libs/jtds-1.2.7.jar`). Lecserélve libs/jtds-1.3.1.jar-re
 - Lekérdezések eredményeit `ResultSet` futja be (`collectAdapterData`), autocomplete Map feltöltése.
 - FIGYELEM: A felhasználónév/jelszó mezők üresek – konfigurációt környezeti szinten célszerű kezelni (lásd Biztonság).
 
