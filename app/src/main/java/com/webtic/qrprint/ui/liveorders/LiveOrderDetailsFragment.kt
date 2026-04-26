@@ -204,7 +204,7 @@ class LiveOrderDetailsFragment : BaseFragment() {
                     "CIKK.MEROV1 AS Mennyiségi_egység, " +
                     "RHATIDO AS Határidő, " +
                     "(CASE WHEN rendelt.rendmenny-trendmenny-kellmenny > 0 AND rendall=9 AND RENDELT.jelzo='V' THEN rendelt.rendmenny-trendmenny-kellmenny ELSE NULL END)/ISNULL(1,1) AS Kiadható, " +
-                    "(SELECT ROUND(SUM(CASE WHEN mozgnem<200 THEN tetelmenny ELSE tetelmenny*-1 END), 2) FROM ${DB_NAME}.dbo.tetel t WHERE t.etk=RENDELT.etk AND RAKTARKOD=1) AS Raktár_készlet, " +
+                    "(SELECT ROUND(SUM(CASE WHEN mozgnem<200 THEN tetelmenny ELSE tetelmenny*-1 END), 3) FROM ${DB_NAME}.dbo.tetel t WHERE t.etk=RENDELT.etk AND RAKTARKOD=1) AS Raktár_készlet, " +
                     "Row_Number() OVER (ORDER BY RENDELT.TETELSSZ) AS sorsz, " +
                     "RENDELT.rendmemo AS Megjegyzés, " +
                     "RENDELf.ugyfelkod, " +
@@ -446,6 +446,7 @@ class LiveOrderDetailsFragment : BaseFragment() {
                 var willUpdateValue = 0
                 if(isChecked) willUpdateValue = 1
                 var checkRow = insertOrUpdateTable("RENDELT_marking", DB_CHECKED_COLUMN_NAME, "${willUpdateValue}", "id = ${cikk.itemNo}")
+                if (isChecked) logEvent("STATUS_SET", cikk.cikk ?: "", args.riktszam.toString(), 0)
             }
             rowView.findViewById<TextView>(R.id.cikk).run {
                 text = cikk.cikk

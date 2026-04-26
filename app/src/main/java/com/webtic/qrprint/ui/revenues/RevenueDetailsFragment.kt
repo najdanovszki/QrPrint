@@ -180,7 +180,8 @@ class RevenueDetailsFragment : BaseFragment() {
                     " ,aa.TETELMEGJ Megjegyzés\n" +
                     " ,aa.UGYFELKOD\n" +
                     " ,left(isnull(aa.GYARTAS,'-------'),1) MISC\n" +
-                    " ,isnull(TETEL_marking.CHECKED, '0') as CHECKED\n "+
+                    " ,isnull(TETEL_marking.CHECKED, '0') as CHECKED\n" +
+                    " ,(SELECT TOP 1 JELMEGNEV1+': '+JELLEMZO FROM ${DB_NAME}.dbo.jellemzok WHERE jellemzok.etk=aa.etk AND SZALLLEVRE='1') as JELLEMZO\n" +
                     "from ${DB_NAME}.dbo.TETEL aa \n" +
                     " JOIN ${DB_NAME}.dbo.cikk ON cikk.etk = aa.etk \n" +
                     " LEFT JOIN ${DB_NAME}.dbo.TETEL_marking ON aa.TETELSSZ = TETEL_marking.id \n" +
@@ -305,7 +306,8 @@ class RevenueDetailsFragment : BaseFragment() {
                 tetelsorszam = result.getInt("tetelssz"),
                 raktarKeszlet = result.getDouble("Raktár_készlet"),
                 checked = result.getBoolean(DB_CHECKED_COLUMN_NAME),
-                itemNo = result.getString("TETELSSZ")
+                itemNo = result.getString("TETELSSZ"),
+                jellemzo = result.getString("JELLEMZO")
             )
             revenueDetailsItem.cikkek.run {
                 if (none { it.sorszam == item.sorszam })
@@ -407,6 +409,7 @@ class RevenueDetailsFragment : BaseFragment() {
                 var willUpdateValue = 0
                 if(isChecked) willUpdateValue = 1
                 var checkRow = insertOrUpdateTable("TETEL_marking", DB_CHECKED_COLUMN_NAME, "${willUpdateValue}", "id = ${cikk.itemNo}")
+                if (isChecked) logEvent("STATUS_SET", cikk.cikk ?: "", args.kbiktszam, 0)
             }
             rowView.findViewById<TextView>(R.id.ssz).text = cikk.sorszam.toString()
             rowView.findViewById<TextView>(R.id.cikk).run {
@@ -449,7 +452,8 @@ class RevenueDetailsFragment : BaseFragment() {
             }
             rowView.findViewById<TextView>(R.id.db).text = cikk.mennyiseg.toString()
             rowView.findViewById<TextView>(R.id.me).text = cikk.mennyisegiEgyseg
-            rowView.findViewById<TextView>(R.id.megjegyzes).text = cikk.megjegyzes
+            rowView.findViewById<TextView>(R.id.megjegyzes).text =
+                listOfNotNull(cikk.megjegyzes?.takeIf { it.isNotBlank() }, cikk.jellemzo?.takeIf { it.isNotBlank() }).joinToString(" / ")
             rowView.findViewById<TextView>(R.id.rk).text = cikk.raktarKeszlet.toString()
             rowView.findViewById<TextView>(R.id.kkodMegoszlas).text = cikk.kkodMegoszlas
             table.addView(rowView)

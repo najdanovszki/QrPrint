@@ -24,6 +24,9 @@ class PreferencesManager @Inject constructor(@ApplicationContext val context: Co
         private const val MAC_ADDRESS_KEY = "macAddress"
         private const val TYPE_KEY = "type"
         private const val CAMERA_KEY = "camera"
+        private const val BILLS_DAYS_BACK_KEY = "billsDaysBack"
+        private const val DELIVERY_NOTES_DAYS_BACK_KEY = "deliveryNotesDaysBack"
+        private const val REVENUES_DAYS_BACK_KEY = "revenuesDaysBack"
     }
 
     private val preferences: SharedPreferences =
@@ -51,6 +54,18 @@ class PreferencesManager @Inject constructor(@ApplicationContext val context: Co
             updateCamera(value)
             field = value
         }
+
+    var billsDaysBack: Int
+        get() = preferences.getInt(BILLS_DAYS_BACK_KEY, 4)
+        set(value) = preferences.edit().putInt(BILLS_DAYS_BACK_KEY, value).apply()
+
+    var deliveryNotesDaysBack: Int
+        get() = preferences.getInt(DELIVERY_NOTES_DAYS_BACK_KEY, 10)
+        set(value) = preferences.edit().putInt(DELIVERY_NOTES_DAYS_BACK_KEY, value).apply()
+
+    var revenuesDaysBack: Int
+        get() = preferences.getInt(REVENUES_DAYS_BACK_KEY, 10)
+        set(value) = preferences.edit().putInt(REVENUES_DAYS_BACK_KEY, value).apply()
 
     fun availablePrinters(listener: PrinterResultListener) {
         CoroutineScope(Dispatchers.IO).async {

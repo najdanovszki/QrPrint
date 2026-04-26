@@ -15,6 +15,7 @@ import com.webtic.qrprint.ui.BaseFragment
 import com.webtic.qrprint.util.AppConstants.DB_NAME
 import com.webtic.qrprint.util.AppConstants.addLineBreak
 import com.webtic.qrprint.util.ConnectionManager
+import com.webtic.qrprint.util.PreferencesManager
 import com.webtic.qrprint.util.QueryError
 import com.webtic.qrprint.util.QuerySuccess
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +26,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class RevenuesFragment : BaseFragment() {
 
+    @Inject
+    lateinit var preferencesManager: PreferencesManager
     private lateinit var table: TableLayout
     private lateinit var header: ViewGroup
     private val rows = mutableListOf<Pair<RevenueItem, View>>()
@@ -48,7 +51,7 @@ class RevenuesFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         try {
-            when (val result = connectionManager.executeQuery(REVENUES_SQL)) {
+            when (val result = connectionManager.executeQuery(buildRevenuesSql())) {
                 is QuerySuccess -> updateTable(result.resultSet)
                 is QueryError -> Log.e("QueryError", "main " + result.exception.message.toString())
             }
@@ -138,30 +141,30 @@ class RevenuesFragment : BaseFragment() {
         }
     }
 
+    private fun buildRevenuesSql() = "select vc.UGYFNEV Ügyfél_rövid_név, szc.UGYFELKOD, \n" +
+            " vc.UGYFTNEV Száll_rövid_név, \n" +
+            " KBIKTSZAM, \n" +
+            " KBIZSZAM Szlev_szám, \n" +
+            " KBKELTE Kelte, \n" +
+            " round(KNETTOERT,3) Nettó_érték,\n" +
+            " round( (SELECT sum(tetelmenny*convert(float,replace(replace(jellemzo,',','.'),' ',''))) Súly \n" +
+            " FROM ${DB_NAME}.dbo.jellemzok, \n" +
+            "  ${DB_NAME}.dbo.tetel \n" +
+            " WHERE tetel.KFIKTSZAM =KESZLETF.KBIKTSZAM \n" +
+            "  and jellemzok.etk = tetel.etk \n" +
+            "  and jellemzok.jelmegnev1 in ('Bruttó kg','Bruttó súly') \n" +
+            "  and not jellemzok.jellemzo is null \n" +
+            "  and isnumeric(jellemzo)=1),3) Br_suly,\n" +
+            " szc.UGYFNEV\n" +
+            "from ${DB_NAME}.dbo.KESZLETF,\n" +
+            " ${DB_NAME}.dbo.UGYFEL vc,\n" +
+            " ${DB_NAME}.dbo.UGYFEL szc\n" +
+            "where vc.UGYFELKOD=KESZLETF.UGYFELKOD \n" +
+            " and szc.UGYFELKOD=KESZLETF.atvevokod\n" +
+            " and mozgnem=101 \n" +
+            " and KBKELTE>=dateadd(d,-${preferencesManager.revenuesDaysBack},getdate()) \n" +
+            "ORDER BY KBIKTSZAM DESC"
+
     private companion object {
-        var REVENUES_SQL = "select vc.UGYFNEV Ügyfél_rövid_név, szc.UGYFELKOD, \n" +
-                " vc.UGYFTNEV Száll_rövid_név, \n" +
-                " KBIKTSZAM, \n" +
-                " KBIZSZAM Szlev_szám, \n" +
-                " KBKELTE Kelte, \n" +
-                " round(KNETTOERT,2) Nettó_érték,\n" +
-                " round( (SELECT sum(tetelmenny*convert(float,replace(replace(jellemzo,',','.'),' ',''))) Súly \n" +
-                " FROM ${DB_NAME}.dbo.jellemzok, \n" +
-                "  ${DB_NAME}.dbo.tetel \n" +
-                " WHERE tetel.KFIKTSZAM =KESZLETF.KBIKTSZAM \n" +
-                "  and jellemzok.etk = tetel.etk \n" +
-                "  and jellemzok.jelmegnev1 in ('Bruttó kg','Bruttó súly') \n" +
-                "  and not jellemzok.jellemzo is null \n" +
-                "  and isnumeric(jellemzo)=1),2) Br_suly,\n" +
-                " szc.UGYFNEV\n" +
-                "from ${DB_NAME}.dbo.KESZLETF,\n" +
-                " ${DB_NAME}.dbo.UGYFEL vc,\n" +
-                " ${DB_NAME}.dbo.UGYFEL szc\n" +
-                "where vc.UGYFELKOD=KESZLETF.UGYFELKOD \n" +
-                " and szc.UGYFELKOD=KESZLETF.atvevokod\n" +
-                " and mozgnem=101 \n" +
-//                " and exists(select 1 from ${DB_NAME}.dbo.tetel where kfiktszam=kbiktszam and sziktszam is null)" +
-                " and KBKELTE>=dateadd(d,-10,getdate()) \n" +
-                "ORDER BY KBIKTSZAM DESC"
     }
 }

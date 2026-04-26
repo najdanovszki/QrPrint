@@ -5,7 +5,10 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.webtic.qrprint.models.QuantityDetails
+import com.webtic.qrprint.util.AppConstants
+import com.webtic.qrprint.util.AppConstants.DB_NAME
 import com.webtic.qrprint.util.AppConstants.DB_QTY_TBL_NAME
+import com.webtic.qrprint.util.AppConstants.LOG_TABLE_NAME
 import com.webtic.qrprint.util.ConnectionManager
 import com.webtic.qrprint.util.QueryError
 import com.webtic.qrprint.util.QuerySuccess
@@ -198,5 +201,39 @@ open class BaseFragment: Fragment() {
             }
         }
         return true
+    }
+
+    private fun ensureLogTable() {
+        connectionManager.execute(
+            "IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = '$LOG_TABLE_NAME')\n" +
+            "BEGIN\n" +
+            "    CREATE TABLE ${DB_NAME}.dbo.$LOG_TABLE_NAME (\n" +
+            "        id BIGINT IDENTITY(1,1),\n" +
+            "        datum DATETIME DEFAULT GETDATE(),\n" +
+            "        felhasznalo VARCHAR(100),\n" +
+            "        esemeny VARCHAR(50),\n" +
+            "        etk VARCHAR(50),\n" +
+            "        kbizszam VARCHAR(100),\n" +
+            "        mennyiseg INT,\n" +
+            "        CONSTRAINT PK_$LOG_TABLE_NAME PRIMARY KEY (id)\n" +
+            "    );\n" +
+            "END;"
+        )
+    }
+
+    fun logEvent(esemeny: String, etk: String, kbizszam: String, mennyiseg: Int) {
+        try {
+            ensureLogTable()
+            val user = AppConstants.loggedInUser.replace("'", "''")
+            val etkSafe = etk.replace("'", "''")
+            val kbizszamSafe = kbizszam.replace("'", "''")
+            val esemenyEscaped = esemeny.replace("'", "''")
+            connectionManager.execute(
+                "INSERT INTO ${DB_NAME}.dbo.$LOG_TABLE_NAME (felhasznalo, esemeny, etk, kbizszam, mennyiseg) " +
+                "VALUES ('$user', '$esemenyEscaped', '$etkSafe', '$kbizszamSafe', $mennyiseg)"
+            )
+        } catch (e: Exception) {
+            Log.e("LOG_EVENT", e.message.toString())
+        }
     }
 }

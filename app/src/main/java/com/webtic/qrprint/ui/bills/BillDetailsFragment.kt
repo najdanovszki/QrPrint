@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TableLayout
 import android.widget.TextView
 import androidx.core.view.children
@@ -15,6 +17,7 @@ import com.webtic.qrprint.R
 import com.webtic.qrprint.ui.BaseFragment
 import com.webtic.qrprint.ui.qrcode.NavigationItem
 import com.webtic.qrprint.ui.qrcode.decodeQuantity
+import com.webtic.qrprint.util.AppConstants.DB_CHECKED_COLUMN_NAME
 import com.webtic.qrprint.util.AppConstants.DB_NAME
 import com.webtic.qrprint.util.ConnectionManager
 import com.webtic.qrprint.util.QueryError
@@ -159,15 +162,17 @@ class BillDetailsFragment : BaseFragment() {
                     " aa.tetelmenny Mennyiség, \n" +
                     " MEROV1 Mennyiségi_egység,\n" +
                     " '' gymegnev1,  \n" +
-                    " (select round(sum(case when mozgnem<200 then tetelmenny else tetelmenny*-1 end),2) from ${DB_NAME}.dbo.tetel t where t.etk=aa.etk and RAKTARKOD=1) as Raktár_készlet,\n" +
-                    " Row_Number() Over (Order By TETELSSZ) Sorszám,\n" +
+                    " (select round(sum(case when mozgnem<200 then tetelmenny else tetelmenny*-1 end),3) from ${DB_NAME}.dbo.tetel t where t.etk=aa.etk and RAKTARKOD=1) as Raktár_készlet,\n" +
+                    " Row_Number() Over (Order By aa.TETELSSZ) Sorszám,\n" +
                     " aa.tetelmegj Megjegyzés,\n" +
                     " aa.UGYFELKOD,\n" +
-                    " left(isnull(aa.GYARTAS,'-------'),1) MISC\n" +
-                    "from ${DB_NAME}.dbo.TETEL aa, \n" +
-                    " ${DB_NAME}.dbo.cikk \n" +
-                    "where cikk.etk=aa.etk\n" +
-                    " and aa.etk!='000'\n" +
+                    " left(isnull(aa.GYARTAS,'-------'),1) MISC,\n" +
+                    " aa.TETELSSZ,\n" +
+                    " isnull(szm.CHECKED, 0) as CHECKED\n" +
+                    "from ${DB_NAME}.dbo.TETEL aa\n" +
+                    " join ${DB_NAME}.dbo.cikk on cikk.etk=aa.etk\n" +
+                    " left join ${DB_NAME}.dbo.SZAMLA_marking szm on aa.TETELSSZ = szm.id\n" +
+                    "where aa.etk!='000'\n" +
                     " and aa.sziktszam=${args.sziktszam}\n" +
                     "ORDER BY Sorszám"
 
@@ -184,12 +189,14 @@ class BillDetailsFragment : BaseFragment() {
                 is QuerySuccess -> fillOtherData(result.resultSet)
                 is QueryError -> Log.e("QueryError", "other " + result.exception.message.toString())
             }
-            when (val result = connectionManager.executeQuery(itemListSql)) {
-                is QuerySuccess -> fillItemList(result.resultSet)
-                is QueryError -> Log.e(
-                    "QueryError",
-                    "itemList " + result.exception.message.toString()
-                )
+            if (checkMarkingTable("SZAMLA")) {
+                when (val result = connectionManager.executeQuery(itemListSql)) {
+                    is QuerySuccess -> fillItemList(result.resultSet)
+                    is QueryError -> Log.e(
+                        "QueryError",
+                        "itemList " + result.exception.message.toString()
+                    )
+                }
             }
             when (val result = connectionManager.executeQuery(megjegyzesSql)) {
                 is QuerySuccess ->
@@ -244,6 +251,8 @@ class BillDetailsFragment : BaseFragment() {
                 if (none { it.sorszam == item.sorszam })
                     add(item)
             }
+            item.itemNo = result.getString("TETELSSZ")
+            item.checked = result.getBoolean("CHECKED")
             try {
                 val kkodMegoszlasSql = "select round((SUM(TETELMENNY)/\n" +
                         "(select SUM(TETELMENNY) from ${DB_NAME}.dbo.TETEL aa\n" +
@@ -312,6 +321,15 @@ class BillDetailsFragment : BaseFragment() {
                 layoutInflater.inflate(R.layout.template_bill_details_table_row, null, true)
 
             rows.add(cikk to rowView)
+
+            val checkBoxRowChecked = rowView.findViewById<CheckBox>(R.id.checkBox)
+            checkBoxRowChecked.visibility = VISIBLE
+            checkBoxRowChecked.isChecked = cikk.checked
+            checkBoxRowChecked.setOnCheckedChangeListener { _, isChecked ->
+                val willUpdateValue = if (isChecked) 1 else 0
+                insertOrUpdateTable("SZAMLA_marking", DB_CHECKED_COLUMN_NAME, "$willUpdateValue", "id = ${cikk.itemNo}")
+                if (isChecked) logEvent("STATUS_SET", cikk.cikk ?: "", args.sziktszam.toString(), 0)
+            }
             rowView.findViewById<TextView>(R.id.ssz).text = cikk.sorszam.toString()
             rowView.findViewById<TextView>(R.id.cikk).run {
                 text = cikk.cikk

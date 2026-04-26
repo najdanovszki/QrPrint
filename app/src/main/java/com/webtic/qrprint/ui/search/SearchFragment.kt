@@ -11,9 +11,11 @@ import android.widget.*
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.webtic.qrprint.R
 import com.webtic.qrprint.ui.BaseFragment
+import com.webtic.qrprint.ui.qrcode.NavigationItem
 import com.webtic.qrprint.util.AppConstants.DB_NAME
 import com.webtic.qrprint.util.ConnectionManager
 import com.webtic.qrprint.util.QueryError
@@ -37,7 +39,7 @@ class SearchFragment : BaseFragment() {
     private val executeQuery: () -> Unit = {
         val sql = "select etk Cikk, gyartas KKOD, db Mennyiség, cikknev1 Leiras\n" +
                 "from \n" +
-                "(select kt.etk,gyartas, round(sum(case when mozgnem<200 then tetelmenny else tetelmenny*-1 end),2)  db, cikknev1\n" +
+                "(select kt.etk,gyartas, round(sum(case when mozgnem<200 then tetelmenny else tetelmenny*-1 end),3)  db, cikknev1\n" +
                 "from ${DB_NAME}.dbo.tetel kt,\n" +
                 "${DB_NAME}.dbo.cikk\n" +
                 "where replace(kt.ETK,'-','') like '%${searchText.text}%' and cikk.etk=kt.etk and RAKTARKOD=1\n" +
@@ -143,7 +145,25 @@ class SearchFragment : BaseFragment() {
             val rowView = layoutInflater.inflate(R.layout.template_search_table_row, null, true)
             rows.add(Pair(row, rowView))
 
-            rowView.findViewById<TextView>(R.id.cikkszam).text = row.cikkszam
+            rowView.findViewById<TextView>(R.id.cikkszam).run {
+                text = row.cikkszam
+                setOnClickListener {
+                    findNavController().navigate(
+                        SearchFragmentDirections.actionSearchFragmentToQrCodeFragment(
+                            NavigationItem(
+                                partNumber = row.cikkszam,
+                                kkod = row.keszletkod,
+                                storage = row.mennyiseg.toString(),
+                                description = row.leiras,
+                                document = null,
+                                quantity = row.mennyiseg.toInt(),
+                                notFromRevenues = false,
+                                clientId = null
+                            )
+                        )
+                    )
+                }
+            }
             rowView.findViewById<TextView>(R.id.keszletkod).text = row.keszletkod
             rowView.findViewById<TextView>(R.id.mennyiseg).text = String.format(row.mennyiseg.toString())
             rowView.findViewById<TextView>(R.id.leiras).text = row.leiras

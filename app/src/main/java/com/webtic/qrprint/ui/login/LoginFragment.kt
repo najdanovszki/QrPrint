@@ -11,6 +11,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.webtic.qrprint.R
 import com.webtic.qrprint.models.BaseResponse
 import com.webtic.qrprint.ui.BaseFragment
+import com.webtic.qrprint.util.AppConstants
 import com.webtic.qrprint.util.AppConstants.DB_NAME
 import com.webtic.qrprint.util.AppConstants.DB_SERVER
 import com.webtic.qrprint.util.AppConstants.DB_USER_NAME
@@ -46,6 +47,7 @@ class LoginFragment : BaseFragment() {
                 DB_NAME = database
                 val user = usernameTv.text.toString()
                 val pass = passwordTv.text.toString()
+                AppConstants.loggedInUser = user
                 if (server.isNotEmpty() &&
                     database.isNotEmpty() &&
                     user.isNotEmpty() &&

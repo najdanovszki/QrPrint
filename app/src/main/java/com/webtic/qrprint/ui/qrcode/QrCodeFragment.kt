@@ -57,6 +57,10 @@ class QrCodeFragment : BaseFragment(), PrinterResultListener {
     private lateinit var lotText: TextView
     private lateinit var multipleText: TextView
     private lateinit var quantityText: TextView
+    private lateinit var multiple2Text: TextView
+    private lateinit var quantity2Text: TextView
+    private lateinit var multiple3Text: TextView
+    private lateinit var quantity3Text: TextView
     private lateinit var resetBtn: Button
     private lateinit var packoutBtn: Button
     private lateinit var generateBtn: Button
@@ -124,6 +128,10 @@ class QrCodeFragment : BaseFragment(), PrinterResultListener {
         lotText = view.findViewById(R.id.lotText)
         multipleText = view.findViewById(R.id.multipleText)
         quantityText = view.findViewById(R.id.quantityText)
+        multiple2Text = view.findViewById(R.id.multiple2Text)
+        quantity2Text = view.findViewById(R.id.quantity2Text)
+        multiple3Text = view.findViewById(R.id.multiple3Text)
+        quantity3Text = view.findViewById(R.id.quantity3Text)
         resetBtn = view.findViewById(R.id.resetBtn)
         packoutBtn = view.findViewById(R.id.packoutBtn)
         generateBtn = view.findViewById(R.id.generateBtn)
@@ -164,7 +172,7 @@ class QrCodeFragment : BaseFragment(), PrinterResultListener {
         var partNumberSQL = "select ETK, CIKKNEV1\n" +
                 "from ${DB_NAME}.dbo.cikk"
         if (partNumber != null)
-            partNumberSQL += "where ETK='$partNumber'"
+            partNumberSQL += " where ETK='$partNumber'"
         when (val result = connectionManager.executeQuery(partNumberSQL)) {
             is QuerySuccess -> partNumberText.setAdapter(
                 ArrayAdapter(
@@ -212,6 +220,10 @@ class QrCodeFragment : BaseFragment(), PrinterResultListener {
             lotText.text = ""
             multipleText.text = ""
             quantityText.text = ""
+            multiple2Text.text = ""
+            quantity2Text.text = ""
+            multiple3Text.text = ""
+            quantity3Text.text = ""
         }
 
         val alertDialog = AlertDialog.Builder(requireContext()).setTitle("Kitöltetlen mező!")
@@ -267,13 +279,14 @@ class QrCodeFragment : BaseFragment(), PrinterResultListener {
             description = pair?.second ?: args.selection!!.description,
             quantity = totalQuantityText.text.toString(),
             firstPrint = "",
-            kod = kkodText.text.toString().first(),
+            kod = kkodText.text.toString().firstOrNull() ?: ' ',
             clientCode = clientId
         )
+        val partNoForLabel = pair?.first ?: args.selection!!.partNumber
         val numberOfPieces =
             if (multipleText.text.isNotBlank()) multipleText.text.toString().toInt() else 1
         try {
-            requestPrinting(PrintRequest(qrCodeImage, descriptionImage, numberOfPieces))
+            requestPrinting(PrintRequest(qrCodeImage, descriptionImage, partNoForLabel, clientId, numberOfPieces))
         } catch (e: IllegalStateException) {
             Snackbar.make(
                 requireView(),
@@ -289,84 +302,93 @@ class QrCodeFragment : BaseFragment(), PrinterResultListener {
             Snackbar.make(requireView(), "Érvénytelen cikkszám", Snackbar.LENGTH_LONG).show()
             return
         }
-        if (args.selection != null) {
-            if (scannedItem == null) {
-                Snackbar.make(requireView(), "Nincs beolvasott QR kód", Snackbar.LENGTH_LONG).show()
-                return
+        if (args.selection != null && scannedItem == null) {
+            Snackbar.make(requireView(), "Nincs beolvasott QR kód", Snackbar.LENGTH_LONG).show()
+            return
+        }
+
+        val partNoValue = pair?.first ?: args.selection!!.partNumber
+        val descValue = pair?.second ?: scannedItem?.description ?: args.selection!!.description
+
+        // Collect the three packaging units (skip rows where qty == 0)
+        val packUnits = listOf(
+            (multipleText.text.toString().toIntOrNull() ?: 0) to (quantityText.text.toString().toIntOrNull() ?: 0),
+            (multiple2Text.text.toString().toIntOrNull() ?: 0) to (quantity2Text.text.toString().toIntOrNull() ?: 0),
+            (multiple3Text.text.toString().toIntOrNull() ?: 0) to (quantity3Text.text.toString().toIntOrNull() ?: 0)
+        ).filter { it.second > 0 }
+
+        val totalPacked = packUnits.sumOf { (mult, qty) -> mult * qty }
+        val originalQty = scannedItem?.quantity
+            ?: totalQuantityText.text.toString().toIntOrNull() ?: 0
+
+        fun executePrint() {
+            val mainQuantity = originalQty - totalPacked
+            val requests = mutableListOf<PrintRequest>()
+
+            // A new sticker should be printed only when there are contents left in the main box
+            if (mainQuantity > 0) {
+                val qrCode = encodeAsBitmap(
+                    createQrText(
+                        partno = partNoValue,
+                        description = descValue,
+                        quantity = mainQuantity.toString(),
+                        document = documentText.text.toString(),
+                        lot = lotText.text.toString(),
+                        firstPrint = scannedItem?.firstPrinted?.let { DATE_FORMAT.format(it) } ?: "",
+                        kkod = kkodText.text.toString()
+                    )
+                )
+                val desc = generateBitmapForDescription(
+                    partNo = partNoValue,
+                    description = descValue,
+                    quantity = mainQuantity.toString(),
+                    firstPrint = scannedItem?.firstPrinted?.let { DATE_FORMAT.format(it) } ?: "",
+                    kod = kkodText.text.toString().firstOrNull() ?: ' ',
+                    clientCode = null
+                )
+                requests.add(PrintRequest(qrCode, desc, partNoValue, null, 1))
+            }
+
+            // Print stickers for each of the three packaging units
+            for ((multiple, qty) in packUnits) {
+                val qrCode = encodeAsBitmap(
+                    createQrText(
+                        partno = partNoValue,
+                        description = descValue,
+                        quantity = qty.toString(),
+                        document = documentText.text.toString(),
+                        lot = lotText.text.toString(),
+                        firstPrint = "",
+                        kkod = kkodText.text.toString()
+                    )
+                )
+                val desc = generateBitmapForDescription(
+                    partNo = partNoValue,
+                    description = descValue,
+                    quantity = qty.toString(),
+                    firstPrint = "",
+                    kod = kkodText.text.toString().firstOrNull() ?: ' ',
+                    clientCode = clientId
+                )
+                requests.add(PrintRequest(qrCode, desc, partNoValue, clientId, multiple))
+            }
+
+            try {
+                requestPrinting(*requests.toTypedArray())
+            } catch (e: IllegalStateException) {
+                Snackbar.make(requireView(), "Nincs kiválasztva nyomtató!", Snackbar.LENGTH_LONG).show()
             }
         }
-        val packed = multipleText.text.toString().toInt() * quantityText.text.toString().toInt()
-        val mainQuantity = when {
-            scannedItem != null -> scannedItem!!.quantity - packed
-            totalQuantityText.text.isNotBlank() -> totalQuantityText.text.toString()
-                .toInt() - packed
-            else -> 0
-        }
 
-        // A new sticker should be printed only when there are contents left in the main box
-        var qrCodeImage: Bitmap? = null
-        var descriptionImage: Bitmap? = null
-        if (mainQuantity > 0) {
-            qrCodeImage = encodeAsBitmap(
-                createQrText(
-                    partno = pair?.first ?: args.selection!!.partNumber,
-                    description = pair?.second ?: scannedItem!!.description,
-                    quantity = mainQuantity.toString(),
-                    document = documentText.text.toString(),
-                    lot = lotText.text.toString(),
-                    firstPrint = scannedItem?.firstPrinted?.let { DATE_FORMAT.format(it) } ?: "",
-                    kkod = kkodText.text.toString()
-                )
-            )
-            descriptionImage = generateBitmapForDescription(
-                partNo = pair?.first ?: args.selection!!.partNumber,
-                description = pair?.second ?: scannedItem!!.description,
-                quantity = mainQuantity.toString(),
-                firstPrint = scannedItem?.firstPrinted?.let { DATE_FORMAT.format(it) } ?: "",
-                kod = kkodText.text.toString().first(),
-                clientCode = null
-            )
-        }
-
-        // Printing the stickers for the new boxes
-        val newQrCodeImage = encodeAsBitmap(
-            createQrText(
-                partno = pair?.first ?: args.selection!!.partNumber,
-                description = pair?.second ?: args.selection!!.description,
-                quantity = quantityText.text.toString(),
-                document = documentText.text.toString(),
-                lot = lotText.text.toString(),
-                firstPrint = "",
-                kkod = kkodText.text.toString()
-            )
-        )
-        val newDescriptionImage = generateBitmapForDescription(
-            partNo = pair?.first ?: args.selection!!.partNumber,
-            description = pair?.second ?: args.selection!!.description,
-            quantity = quantityText.text.toString(),
-            firstPrint = "",
-            kod = kkodText.text.toString().first(),
-            clientCode = clientId
-        )
-        try {
-            val args: MutableList<PrintRequest> = mutableListOf()
-            if (mainQuantity > 0)
-                args.add(PrintRequest(qrCodeImage, descriptionImage, 1))
-
-            args.add(
-                PrintRequest(
-                    newQrCodeImage,
-                    newDescriptionImage,
-                    multipleText.text.toString().toInt()
-                )
-            )
-            requestPrinting(*args.toTypedArray())
-        } catch (e: IllegalStateException) {
-            Snackbar.make(
-                requireView(),
-                "Nincs kiválasztva nyomtató!",
-                Snackbar.LENGTH_LONG
-            ).show()
+        if (totalPacked != originalQty) {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Mennyiség eltérés!")
+                .setMessage("Az összesített mennyiség ($totalPacked) nem egyezik a sor mennyiségével ($originalQty). Biztosan folytatni akarod?")
+                .setPositiveButton("Folytatás") { _, _ -> executePrint() }
+                .setNegativeButton("Vissza") { dialog, _ -> dialog.cancel() }
+                .show()
+        } else {
+            executePrint()
         }
     }
 
@@ -386,11 +408,13 @@ class QrCodeFragment : BaseFragment(), PrinterResultListener {
             append("$document\n")
             append("$lot\n")
             val today = DATE_FORMAT.format(Date())
+            // Only the first character of kkod is stored in the QR code
+            val kkodChar = kkod.firstOrNull() ?: ' '
             if (firstPrint.isNotBlank()) {
-                append("$firstPrint $kkod\n")
-                append("$today $kkod")
+                append("$firstPrint $kkodChar\n")
+                append("$today $kkodChar")
             } else {
-                append("$today $kkod")
+                append("$today $kkodChar")
             }
         }.toString()
     }
@@ -454,22 +478,17 @@ class QrCodeFragment : BaseFragment(), PrinterResultListener {
         val dp = 3f
         val mainPaint = TextPaint().apply {
             isAntiAlias = true
-            textSize = 16 * dp
+            textSize = AppConstants.LABEL_INFO_FONT_DP * dp
             color = Color.BLACK
         }
         val secondaryPaint = TextPaint().apply {
             set(mainPaint)
-            textSize = 11 * dp
+            textSize = AppConstants.LABEL_INFO_FONT_DP * dp
         }
         val currentDate = DATE_FORMAT.format(Date())
 
+        // PN and CC are now rendered in the label header by buildLabelBitmap
         val mainText = StringBuilder().apply {
-            append("PN: $partNo")
-            if (clientCode != null) {
-                appendLine()
-                append("CC: $clientCode")
-            }
-            appendLine()
             append("QTY: $quantity")
         }
 
@@ -535,16 +554,54 @@ class QrCodeFragment : BaseFragment(), PrinterResultListener {
     }
 
     /**
-     * Combines the input bitmaps and delegates the print request to the PrinterManager object
+     * Builds a label bitmap with PN/CC in the header and QR code + info side by side below.
+     */
+    private fun buildLabelBitmap(
+        qrCode: Bitmap,
+        descBitmap: Bitmap,
+        partNo: String,
+        clientCode: String?
+    ): Bitmap {
+        val dp = 3f
+        val headerPaint = TextPaint().apply {
+            isAntiAlias = true
+            textSize = AppConstants.LABEL_PART_NO_FONT_DP * dp
+            color = Color.BLACK
+            isFakeBoldText = true
+        }
+        val lineHeight = (headerPaint.textSize * 1.4f).toInt()
+        val headerLineCount = if (clientCode != null) 2 else 1
+        val headerHeight = headerLineCount * lineHeight + 16
+
+        val totalWidth = 2 * QR_SIZE
+        val totalHeight = QR_SIZE + headerHeight
+        val output = Bitmap.createBitmap(totalWidth, totalHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(output)
+        canvas.drawColor(Color.WHITE)
+
+        // Header: our part number (line 1)
+        canvas.drawText("PN: $partNo", 10f, headerPaint.textSize + 8f, headerPaint)
+        // Header: customer code (line 2, only if present)
+        if (clientCode != null) {
+            canvas.drawText("CC: $clientCode", 10f, headerPaint.textSize * 2 + 12f, headerPaint)
+        }
+
+        // Body: QR code on left, description info on right
+        canvas.drawBitmap(qrCode, 0f, headerHeight.toFloat(), null)
+        canvas.drawBitmap(descBitmap, QR_SIZE.toFloat(), headerHeight.toFloat(), null)
+
+        return output
+    }
+
+    /**
+     * Combines the input bitmaps into a full label and delegates the print request to PreferencesManager.
      */
     private fun requestPrinting(vararg images: PrintRequest) {
         val requestList = images.map {
             if (it.qrCode == null || it.desc == null) return
-            val output = Bitmap.createBitmap(2 * QR_SIZE, QR_SIZE, Bitmap.Config.ARGB_8888)
-            val combined = Canvas(output)
-            combined.drawBitmap(it.qrCode, 0f, 0f, null)
-            combined.drawBitmap(it.desc, QR_SIZE.toFloat(), 0f, null)
-            output to it.quantity
+            val label = buildLabelBitmap(it.qrCode, it.desc, it.partNo, it.clientCode)
+            logEvent("PRINT", it.partNo, documentText.text.toString(), it.quantity)
+            label to it.quantity
         }
         preferencesManager.printImage(this, *requestList.toTypedArray())
     }
@@ -623,10 +680,11 @@ class QrCodeFragment : BaseFragment(), PrinterResultListener {
                     ).show()
                     return
                 }
-                if (args.selection != null && (rows.first() != args.selection!!.partNumber || kkod != args.selection!!.kkod)) {
+                if (args.selection != null && (rows.first() != args.selection!!.partNumber || kkod != args.selection!!.kkod.take(1))) {
                     Log.d("ErrorRead", firstPrint.toString())
                     Log.d("ErrorRead", rows.first() + " " + args.selection!!.partNumber)
                     Log.d("ErrorRead", kkod + " " + args.selection!!.kkod)
+                    logEvent("SCAN_MISMATCH", rows.first(), args.selection!!.document ?: "", 0)
                     Snackbar.make(
                         requireView(),
                         "A beolvasott adat nem egyezik meg a kiválasztottal",
@@ -714,6 +772,8 @@ class QrCodeFragment : BaseFragment(), PrinterResultListener {
     private data class PrintRequest(
         val qrCode: Bitmap?,
         val desc: Bitmap?,
+        val partNo: String,
+        val clientCode: String?,
         val quantity: Int,
     )
 }

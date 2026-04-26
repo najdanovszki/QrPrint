@@ -28,5 +28,7 @@ data class Cikk(
     var megjegyzes: String? = null,
     var ugyfelkod: Int? = null,
     var kkodMegoszlas: String? = null,
-    val misc: String? = null
+    val misc: String? = null,
+    var checked: Boolean = false,
+    var itemNo: String? = null
 )

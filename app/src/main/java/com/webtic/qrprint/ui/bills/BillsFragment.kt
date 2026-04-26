@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import com.webtic.qrprint.R
 import com.webtic.qrprint.util.AppConstants.DB_NAME
 import com.webtic.qrprint.util.ConnectionManager
+import com.webtic.qrprint.util.PreferencesManager
 import com.webtic.qrprint.util.QueryError
 import com.webtic.qrprint.util.QuerySuccess
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +26,8 @@ class BillsFragment : Fragment() {
 
     @Inject
     lateinit var connectionManager: ConnectionManager
+    @Inject
+    lateinit var preferencesManager: PreferencesManager
     private lateinit var table: TableLayout
     private lateinit var header: ViewGroup
     private val rows = mutableListOf<Pair<BillItem, View>>()
@@ -47,7 +50,7 @@ class BillsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         try {
-            when (val result = connectionManager.executeQuery(BILLS_SQL)) {
+            when (val result = connectionManager.executeQuery(buildBillsSql())) {
                 is QuerySuccess -> updateTable(result.resultSet)
                 is QueryError -> Log.e(
                     "QueryError",
@@ -138,23 +141,24 @@ class BillsFragment : Fragment() {
         Log.d("SQLRESULT", "rows fetched: ${rows.size}")
     }
 
+    private fun buildBillsSql() = "select VC.UGYFNEV Ügyfél_rövid_név, \n" +
+            "SZC.UGYFNEV Szállít_rövid_név, \n" +
+            "SZIKTSZAM, \n" +
+            "SZLASZAM Számlaszám, \n" +
+            "SZKELTE Kelte, \n" +
+            "round(SZNETTOERT,3) Nettó,\n" +
+            "round(( SELECT sum(tetelmenny*convert(float,replace(replace(jellemzo,',','.'),' ',''))) Súly \n" +
+            "  FROM ${DB_NAME}.dbo.jellemzok, ${DB_NAME}.dbo.tetel  \n" +
+            "  WHERE tetel.sziktszam =SZAMLA.sziktszam  and jellemzok.etk = tetel.etk \n" +
+            "    and jellemzok.jelmegnev1 in ('Bruttó kg','Bruttó súly') \n" +
+            "    and not jellemzok.jellemzo is null and isnumeric(jellemzo)=1),3) Br_suly\n" +
+            " from ${DB_NAME}.dbo.SZAMLA,${DB_NAME}.dbo.UGYFEL SZC,${DB_NAME}.dbo.UGYFEL VC \n" +
+            " where SZC.UGYFELKOD=SZAMLA.ATVEVOKOD \n" +
+            " and VC.UGYFELKOD=SZAMLA.UGYFELKOD \n" +
+            " and szkelte>dateadd(day,-${preferencesManager.billsDaysBack},SYSDATETIME()) " +
+            "order by SZIKTSZAM desc"
+
     private companion object {
-        var BILLS_SQL = "select VC.UGYFNEV Ügyfél_rövid_név, \n" +
-                "SZC.UGYFNEV Szállít_rövid_név, \n" +
-                "SZIKTSZAM, \n" +
-                "SZLASZAM Számlaszám, \n" +
-                "SZKELTE Kelte, \n" +
-                "round(SZNETTOERT,2) Nettó,\n" +
-                "round(( SELECT sum(tetelmenny*convert(float,replace(replace(jellemzo,',','.'),' ',''))) Súly \n" +
-                "  FROM ${DB_NAME}.dbo.jellemzok, ${DB_NAME}.dbo.tetel  \n" +
-                "  WHERE tetel.sziktszam =SZAMLA.sziktszam  and jellemzok.etk = tetel.etk \n" +
-                "    and jellemzok.jelmegnev1 in ('Bruttó kg','Bruttó súly') \n" +
-                "    and not jellemzok.jellemzo is null and isnumeric(jellemzo)=1),2) Br_suly\n" +
-                " from ${DB_NAME}.dbo.SZAMLA,${DB_NAME}.dbo.UGYFEL SZC,${DB_NAME}.dbo.UGYFEL VC \n" +
-                " where SZC.UGYFELKOD=SZAMLA.ATVEVOKOD \n" +
-                " and VC.UGYFELKOD=SZAMLA.UGYFELKOD \n" +
-                " and szkelte>dateadd(day,-4,SYSDATETIME()) " +
-                "order by SZIKTSZAM desc"
     }
 }
 

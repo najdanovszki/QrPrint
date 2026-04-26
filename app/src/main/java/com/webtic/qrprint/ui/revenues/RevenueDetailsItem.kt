@@ -33,6 +33,7 @@ data class Cikk(
     var gyariszam: String? = null,
     var kkodMegoszlas: String? = null,
     var checked: Boolean = false,
-    val itemNo: String = ""
+    val itemNo: String = "",
+    var jellemzo: String? = null
 )
 
